@@ -52,6 +52,7 @@
     <Compile Include="FarmRepository.cs" />
     <Compile Include="FarmUnitOfWork.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Models\FarmDal.cs" />
     <Compile Include="Models\FarmStorageDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

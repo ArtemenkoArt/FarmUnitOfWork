@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Farm.Dal
 {
-    public class FarmUnitOfWork : IDisposable
+    public class FarmUnitOfWork : IDisposable, IUnitOfWork
     {
         private FarmDataContext db;
         private bool disposed;

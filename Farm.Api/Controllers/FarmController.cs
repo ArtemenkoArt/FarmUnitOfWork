@@ -10,9 +10,9 @@ namespace Farm.Api.Controllers
     {
         private IRepository<FarmDal> _farmRepository;
 
-        public FarmController()
+        public FarmController(IUnitOfWork unitOfWork)
         {
-            var unitOfWork = new FarmUnitOfWork(new FarmDataContext());
+            //var unitOfWork = new FarmUnitOfWork(new FarmDataContext());
             _farmRepository = unitOfWork.Farms;
         }
 
