@@ -37,12 +37,14 @@ namespace Farm.Dal
         public void Create(FarmDal item)
         {
             db.Farms.Add(item);
+            db.SaveChanges();
         }
 
         //
         public void Update(FarmDal item)
         {
             db.Entry(item).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
         //
@@ -52,6 +54,7 @@ namespace Farm.Dal
             if (farm != null)
             {
                 db.Farms.Remove(farm);
+                db.SaveChanges();
             }
         }
     }

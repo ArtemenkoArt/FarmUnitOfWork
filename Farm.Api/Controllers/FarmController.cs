@@ -1,8 +1,5 @@
 ﻿using Farm.Dal;
 using Farm.Dal.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -38,10 +35,18 @@ namespace Farm.Api.Controllers
 
         [HttpPost]
         public HttpResponseMessage Create([FromBody]FarmDal farm)
+        //public HttpResponseMessage Create(FarmDal farm)
         {
-            if (!ModelState.IsReadOnly)
+            var errorMassage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+
+            if (farm == null)
             {
-                var errorMassage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+                errorMassage.Content = new StringContent("Farm can't be empty!");
+                return errorMassage;
+            }
+
+            if (!ModelState.IsValid)
+            {   
                 errorMassage.Content = new StringContent("Name can't be empty!");
                 return errorMassage;
             }
@@ -67,7 +72,7 @@ namespace Farm.Api.Controllers
         [Route("search/param")]
         public IHttpActionResult Search(string name)
         {
-            var farm = _farmRepository.Find(x => x.Nmae.Contains(name));
+            var farm = _farmRepository.Find(x => x.Name.ToUpper().Contains(name.ToUpper()));
             return Ok(farm);
         }
     }
