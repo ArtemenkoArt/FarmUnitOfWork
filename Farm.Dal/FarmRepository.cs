@@ -24,7 +24,7 @@ namespace Farm.Dal
         //
         public IEnumerable<FarmDal> GetAll()
         {
-            return db.Farms;
+            return db.Farms.ToList();
         }
 
         //

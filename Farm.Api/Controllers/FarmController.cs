@@ -18,5 +18,57 @@ namespace Farm.Api.Controllers
             var unitOfWork = new FarmUnitOfWork(new FarmDataContext());
             _farmRepository = unitOfWork.Farms;
         }
+
+        [HttpGet]
+        public IHttpActionResult GetAll()
+        {
+            return Ok(_farmRepository.GetAll());
+        }
+
+        [HttpGet]
+        public IHttpActionResult Get(int id)
+        {
+            var farm = _farmRepository.Get(id);
+            if (farm == null)
+            {
+                return NotFound();
+            }
+            return Ok(farm);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage Create([FromBody]FarmDal farm)
+        {
+            if (!ModelState.IsReadOnly)
+            {
+                var errorMassage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+                errorMassage.Content = new StringContent("Name can't be empty!");
+                return errorMassage;
+            }
+            _farmRepository.Create(farm);
+            return new HttpResponseMessage(HttpStatusCode.OK);
+        }
+
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] FarmDal farm)
+        {
+            _farmRepository.Update(farm);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+            _farmRepository.Delete(id);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("search/param")]
+        public IHttpActionResult Search(string name)
+        {
+            var farm = _farmRepository.Find(x => x.Nmae.Contains(name));
+            return Ok(farm);
+        }
     }
 }
