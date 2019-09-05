@@ -13,7 +13,7 @@ namespace Farm.Api
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            Autofac.Register();
+            Autofac.Register(GlobalConfiguration.Configuration);
         }
     }
 }

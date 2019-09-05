@@ -1,5 +1,7 @@
 ﻿using Farm.Dal;
 using Farm.Dal.Models;
+using Autofac;
+using Autofac.Integration.WebApi;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -8,12 +10,14 @@ namespace Farm.Api.Controllers
 {
     public class FarmController : ApiController
     {
+        private IUnitOfWork _unitOfWork;
         private IRepository<FarmDal> _farmRepository;
 
         public FarmController(IUnitOfWork unitOfWork)
         {
             //var unitOfWork = new FarmUnitOfWork(new FarmDataContext());
-            _farmRepository = unitOfWork.Farms;
+            _unitOfWork = unitOfWork;
+            _farmRepository = _unitOfWork.Farms;
         }
 
         [HttpGet]

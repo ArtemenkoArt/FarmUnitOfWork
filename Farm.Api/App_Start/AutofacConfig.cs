@@ -13,7 +13,7 @@ namespace Farm.Api
 {
     public static class Autofac
     {
-        public static void Register()
+        public static void Register(HttpConfiguration config)
         {
             // Base set-up
             var builder = new ContainerBuilder();
@@ -27,16 +27,16 @@ namespace Farm.Api
             //                          .InstancePerRequest();
 
             // OPTIONAL: Register the Autofac filter provider.
-            builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
+            builder.RegisterWebApiFilterProvider(config);
+
+            // Register dependencies
+            SetUpRegistration(builder);
 
             // Build the Container
             var container = builder.Build();
 
-            //Create the Dependency Resolver
-            var resolver = new AutofacWebApiDependencyResolver(container);
-
-            //Configuring WebApi with Dependency Resolver
-            GlobalConfiguration.Configuration.DependencyResolver = resolver;
+            // Set the dependency resolver to be Autofac.
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
 
         private static void SetUpRegistration(ContainerBuilder builder)
